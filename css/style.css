@@ -1,0 +1,135 @@
+
+/*font-family: 'Roboto Condensed', sans-serif;*/
+
+body {
+    background: #e7ebee;
+    font-family: 'Roboto Condensed', sans-serif;
+    color: #344644;
+
+}
+.clear{
+    clear: both;
+}
+.wrapper{
+    width: 100%;
+    margin: 0px auto;
+    padding: 0px 15px;
+    height: 100%;
+}
+
+.static-block-top h1 {
+    font: normal normal normal 32px/32px 'Roboto Condensed', sans-serif;
+    margin: 0 0 5px 0;
+}
+.static-block-top p {
+    color: #666;
+    font: normal normal normal 15px/18px 'Roboto Condensed', sans-serif;
+}
+.left-title-map-top{
+    background: url('../images/white-transparent.png') repeat;
+    /*background: #FFFFFF;*/
+    box-shadow: 1px 1px 2px 0 #CCCCCC;
+    padding: 10px;
+}
+.right-search-form{
+    background: #FFFFFF;
+    box-shadow: 1px 1px 2px 0 #CCCCCC;
+}
+.left-btn-plus-minus {
+    width: 16%;
+    float: left;
+}
+.left-btn-plus-minus input{
+    height: 34px;
+    width: 30px;
+}
+.search-form-container{
+    padding:10px;
+}
+.left-top-input{
+    width: 84%;
+}
+.right-form-data{
+    padding: 5px 0px;
+}
+.left-bottom-input select{
+    margin: 0 0 5px 0;
+}
+.static-block-top{
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 9999;
+    width: 100%;
+    padding: 0px 15px;
+    margin: 0;
+}
+.bottom-scrollbar-container{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    z-index: 9999;
+    width: 100%;
+    padding: 0px 15px;
+    margin: 0;
+}
+.bottom-scrollbar{
+    background: #FFFFFF;
+    box-shadow: 1px 1px 2px 0 #CCCCCC;
+    padding: 15px 2%;
+    width: 50%;
+    margin: 0 auto;
+    height: 70px;
+}
+.bottom-scrollbar-info {
+    padding: 15px 0 0px;
+}
+
+/* ==========CUSTOM NEW ============  */
+root { 
+    display: block;
+}
+
+.field-lbl {
+    display: inline-block;
+    width: 6%;
+    float: left;
+}
+.sbmt-btn {
+    margin-top: 10px;
+}
+
+.error-input {
+    display: none;
+}
+
+.error-fld {
+    border-color: red;
+}
+.suggestion-form,.suggestion-form h3,.Bug-report-form,.Bug-report-form h3{
+    margin-top: 0px;
+}
+.search {
+    z-index: 1;
+    position: absolute;
+}
+.about-message-container{
+    text-align: center;
+    position: relative;
+}
+.about-message-container a{
+    position: absolute;
+    font-weight: bold;
+}
+.about-message-container a.task-1-url{
+    top: -2px;
+    left: 65px;    
+}
+.about-message-container a.task-2-url{
+    bottom: -3px;
+    left: 65px;
+}
+.about-message-container a.task-3-url{
+    top: 46px;
+    right: 50px
+}
