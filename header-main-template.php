@@ -2,15 +2,21 @@
 /**
  * Header Template main template
  */
-wp_enqueue_script('jquery-11');
+//wp_enqueue_script('jquery-11');
 wp_enqueue_script('jquery-ui');
-wp_enqueue_script('jquery-map');
+wp_enqueue_script('googlemap');
+wp_enqueue_script('jsapi');
+wp_enqueue_script('maphelper');
+wp_enqueue_script('infobox');
+
 
 wp_enqueue_style('bootstrap');
 wp_enqueue_style('font-awesome');
 wp_enqueue_style('roboto-font');
+//wp_enqueue_style('gmap');
 wp_enqueue_style('jquery-ui');
 wp_enqueue_style('style-css');
+
 ?>
 <!doctype html>
 <!--[if !IE]>
@@ -38,116 +44,137 @@ wp_enqueue_style('style-css');
         <![endif]-->
         <?php wp_head(); ?>
         <style type="text/css">
-            html, body, #map-canvas {
+            html, body, #map_canvas {
                 height: 100%;
                 margin: 0px;
                 padding: 0px;
                 position: relative;
             }
-        </style>
-        <script>
-            var map;
-            var mapStyle = [{
-                    'featureType': 'all',
-                    'elementType': 'all',
-                    'stylers': [{'visibility': 'off'}]
-                }, {
-                    'featureType': 'landscape',
-                    'elementType': 'geometry',
-                    'stylers': [{'visibility': 'on'}, {'color': '#fcfcfc'}]
-                }, {
-                    'featureType': 'water',
-                    'elementType': 'labels',
-                    'stylers': [{'visibility': 'off'}]
-                }, {
-                    'featureType': 'water',
-                    'elementType': 'geometry',
-                    'stylers': [{'visibility': 'on'}, {'hue': '#5f94ff'}, {'lightness': 60}]
-                }];
-
-            google.maps.event.addDomListener(window, 'load', function() {
-                map = new google.maps.Map(document.getElementById('map-canvas'), {
-                    center: { lat: 20, lng: -160 },
-                    zoom: 3,
-                    styles: mapStyle
-                });
-
-                map.data.setStyle(styleFeature);
-
-                // Get the earthquake data (JSONP format)
-                // This feed is a copy from the USGS feed, you can find the originals here:
-                //   http://earthquake.usgs.gov/earthquakes/feed/v1.0/geojson.php
-                var script = document.createElement('script');
-                script.setAttribute('src','<?php bloginfo('template_directory'); ?>/json/quakes.geo.json');
-                document.getElementsByTagName('head')[0].appendChild(script);
-            });
-
-            // Defines the callback function referenced in the jsonp file.
-            function eqfeed_callback(data) {
-                map.data.addGeoJson(data);
+            .chart_ct {
+                width:850px;
+                display:block;
+                background:#FFF;
+                border:1px solid #F00;
+                padding:25px;
+                text-align:center; 
             }
-
-            function styleFeature(feature) {
-                var low = [151, 83, 34];   // color of mag 1.0
-                var high = [5, 69, 54];  // color of mag 6.0 and above
-                var minMag = 1.0;
-                var maxMag = 6.0;
-
-                // fraction represents where the value sits between the min and max
-                var fraction = (Math.min(feature.getProperty('mag'), maxMag) - minMag) / (maxMag - minMag);
-
-                var color = interpolateHsl(low, high, fraction);
-
-                return {
-                    icon: {
-                        path: google.maps.SymbolPath.CIRCLE,
-                        strokeWeight: 0.5,
-                        strokeColor: '#fff',
-                        fillColor: color,
-                        fillOpacity: 2 / feature.getProperty('mag'),
-                        // while an exponent would technically be correct, quadratic looks nicer
-                        scale: Math.pow(feature.getProperty('mag'), 2)
-                    },
-                    zIndex: Math.floor(feature.getProperty('mag'))
-                };
+            .chart_ct h2 {
+                font-size:16px; 
             }
-
-            function interpolateHsl(lowHsl, highHsl, fraction) {
-                var color = [];
-                for (var i = 0; i < 3; i++) {
-                    // Calculate color based on the fraction.
-                    color[i] = (highHsl[i] - lowHsl[i]) * fraction + lowHsl[i];
-                }
-
-                return 'hsl(' + color[0] + ',' + color[1] + '%,' + color[2] + '%)';
+            .chart_ct .country_flag {
+                float:left; 
             }
-                
-            function getLocation(address) {
-                if(address != '') {
-                    var geocoder = new google.maps.Geocoder();
-                    geocoder.geocode( { 'address': address}, function(results, status) {
-                        if (status == google.maps.GeocoderStatus.OK) {
-                            var latitude = results[0].geometry.location.lat();
-                            var longitude = results[0].geometry.location.lng();
-                            initialize(latitude,longitude);
-                        }
-                    });
-                } else {
-                    navigator.geolocation.getCurrentPosition(function(position){
-                        initialize(position.coords.latitude,position.coords.longitude);
-                    });
-                } 
+            .chart_div{
+                width:750px; 
+                height:250px;
+                margin:0px auto; 
+            }
+            .main-page-small-logo{
+                position:absolute;
+                right:15px;
+                bottom:15px;
+                z-index:20px;
+                 
+            }
+            .main-page-small-logo img {
+                width:100px; 
             }
             
-            function initialize(latitude,longitude) {
-                var mapOptions = {
-                    center: { lat: latitude, lng: longitude},
-                    zoom: 5
-                };
-                var map = new google.maps.Map(document.getElementById('map-canvas'),mapOptions);            }
-
+        </style>
+<script type="text/javascript">
+        var map;
+        var mapDiv;
+        var geocoder;
+        var marker;
+        
+        var country         = null;
+        var country_chart   = null;
+        
+        // Infobox Default Settings
+        var infoboxOptions  = {
+            content                 : '',
+            disableAutoPan          : false,
+            maxWidth                : 0,
+            pixelOffset             : new google.maps.Size(-400,-300),
+            zIndex                  : null,
+            boxStyle                : { 
+                background  : "url('http://google-maps-utility-library-v3.googlecode.com/svn/trunk/infobox/examples/tipbox.gif') no-repeat",
+                opacity     : 0.95
+            },
+            closeBoxMargin          : "20px",
+            closeBoxURL             : "http://www.google.com/intl/en_us/mapfiles/close.gif",
+            infoBoxClearance        : new google.maps.Size(1, 1),
+            isHidden                : false,
+            pane                    : "floatPane",
+            enableEventPropagation  : false
+        };
+        var infobox         = null;
+        
+        var chartBase       = 'https://chart.googleapis.com/chart?chst=';
             
             jQuery(document).ready(function() {
+                
+                var styleOff = [{ visibility: 'off' }];
+                var stylez = [
+                    {   featureType: 'administrative',
+                        elementType: 'labels',
+                        stylers: styleOff},
+                    {   featureType: 'administrative.province',
+                        stylers: styleOff},
+                    {   featureType: 'administrative.locality',
+                        stylers: styleOff},
+                    {   featureType: 'administrative.neighborhood',
+                        stylers: styleOff},
+                    {   featureType: 'administrative.land_parcel',
+                        stylers: styleOff},
+                    {   featureType: 'poi',
+                        stylers: styleOff},
+                    {   featureType: 'landscape',
+                        stylers: styleOff},
+                    {   featureType: 'road',
+                        stylers: styleOff}
+                ];
+                
+                geocoder    = new google.maps.Geocoder();
+                
+                mapDiv      = document.getElementById('map_canvas');
+                map         = new google.maps.Map(mapDiv, {
+                    center                : new google.maps.LatLng(53.012924,18.59848), // needs to get this corrected
+                    zoom                  : 2,
+                    mapTypeId             : 'Border View',
+                    draggableCursor       : 'pointer',
+                    draggingCursor        : 'wait',
+                    mapTypeControlOptions : {
+                        mapTypeIds        : ['Border View']
+                    }
+                });
+                var customMapType = new google.maps.StyledMapType(stylez,{name: 'Border View'});
+                
+                map.mapTypes.set('Border View', customMapType);
+                /*marker = new google.maps.Marker({
+                    position: new google.maps.LatLng(53.012924,18.59848),
+                    map: map
+                });*/
+                
+                if(navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(function(position) {
+                    var pos = new google.maps.LatLng(position.coords.latitude,
+                                                       position.coords.longitude);
+
+                      map.setCenter(pos);
+                      var mev = {
+                        stop: null,
+                        latLng: pos
+                        }   
+
+                        google.maps.event.trigger(map, 'click', mev);
+                    }, function() {
+                        // goe Location service fail function
+                    });
+                } 
+                
+                google.maps.event.addListener(map, 'click', bnpw_mapclick);
+                
                 jQuery('.search-btn').click(function() {
                     getLocation(jQuery('#search_txt').val());
                 });
