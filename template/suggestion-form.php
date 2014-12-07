@@ -4,7 +4,7 @@
  * Template Name:  Suggestion form page
  *
  */
-wp_enqueue_script('jquery-11');
+//wp_enqueue_script('jquery-11');
 wp_enqueue_script('sprintly-js');
 wp_enqueue_script('sprintly-conn');
 
@@ -19,7 +19,7 @@ add_action('wp_enqueue_scripts', function() {
 add_action('wp_head', function() {
             ?>
             <script type="text/javascript">
-                $.noConflict();
+                //$.noConflict();
                 jQuery(document).ready(function(){
                     jQuery('.sbmt-btn').click(function(){
                         error = false;

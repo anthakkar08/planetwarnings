@@ -1,34 +1,7 @@
-/* 
-    Document   : custom
-    Created on : Dec 6, 2014, 3:28:43 PM
-    Author     : kunal
-    Description:
-        Purpose of the stylesheet follows.
-*/
-
-root { 
-    display: block;
+#logo{
+    float: none !important;
+    text-align: center;
 }
-
-.field-lbl {
-    display: inline-block;
-    width: 6%;
-    float: left;
-}
-
-.pull-left {
-    float:left;
-}
-
-.clearfix {
-    clear: both;
-}
-
-.sbmt-btn {
-    margin-top: 10px;
-}
-
-
-.error-fld {
-    border-color: red;
+#logo a img{
+    max-width: 168px;
 }
