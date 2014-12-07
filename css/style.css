@@ -133,3 +133,66 @@ root {
     top: -10px;
     right: 40px
 }
+/* ===== TEAM ======== */
+.team-row-main p{
+    text-align: justify;
+}
+.mrg-bottom25{
+    margin-bottom:25px !important; 
+}
+.team-row-main h5{
+    margin: 0 0 10px 0;
+    font-weight: bold;
+    font-size: 20px;
+    text-transform: capitalize;
+    text-align: center;
+}
+.git-block .ninja-left,.git-block .ninja-right{
+    padding-top: 60px;
+}
+.team-wrapper h2{
+    text-align: center;
+    margin: 0 0 25px 0;
+    font-weight: bold;
+    border-bottom: 2px solid #344644;
+    padding: 0 0 20px 0;
+    text-transform: capitalize;
+}
+div.team-wrapper {
+    font-family: 'Roboto Condensed', sans-serif;
+    color: #344644;
+    margin-top: 20px;
+    text-align: center;
+}
+.rules-wrapper{
+    text-align: center;
+    position: relative;
+}
+.rules-wrapper a {
+    position: absolute;
+    font-weight: bold;
+}
+.rules-wrapper a.rule-1-url {
+    top: -2px;
+    left: 12px;
+}
+.rules-wrapper a.rule-2-url {
+    top: 170px;
+    left: 65px;
+}
+.rules-wrapper a.rule-3-url {
+    top: 590px;
+    left: 45px;
+}
+.rules-wrapper a.rule-4-url {
+    top: -18px;
+    right: 15px;
+}
+.rules-wrapper a.rule-5-url {
+    top: 215px;
+    right: 0px;
+}
+.rules-wrapper a.rule-6-url {
+    top: 535px;
+    right: 5px;
+}
