@@ -19,7 +19,7 @@ add_action('wp',function(){
     wp_register_script('sprintly-conn'  , get_template_directory_uri() .'/js/sprintly_conn.js',array( 'jquery'));
     wp_register_script('bootstrapjs'    , get_template_directory_uri() .'/js/bootstrap.js',array( 'jquery'));
     wp_register_script('maphelper'      , get_template_directory_uri() .'/js/maphelper.js');
-    
+    wp_register_script('timecube'       , get_template_directory_uri() .'/js/timecube.jquery.js',array( 'jquery'));
     
     /**
      * CSS
@@ -29,8 +29,11 @@ add_action('wp',function(){
     wp_register_style('roboto-font'         , 'http://fonts.googleapis.com/css?family=Roboto+Condensed:300italic,700,400');
     wp_register_style('gmap'                , 'http://code.google.com/apis/maps/documentation/javascript/examples/default.css');
     wp_register_style('jquery-ui'           , get_template_directory_uri() . '/css/jquery-ui.css');
+    wp_register_style('jqueryscript'        , 'http://www.jqueryscript.net/css/jquerysctipttop.css');
+    wp_register_style('timecube'            , get_template_directory_uri() . '/css/timecube.jquery.css');
     wp_register_style('style-css'           , get_template_directory_uri() . '/css/style.css');
     wp_register_style('custom-css'          , get_template_directory_uri() . '/css/custom.css');
+    
     
 });
 
