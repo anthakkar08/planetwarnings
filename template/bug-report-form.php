@@ -4,9 +4,29 @@
  * Template Name:  Bug report form page
  *
  */
-wp_enqueue_script('jquery-11');
+
 wp_enqueue_script('sprintly-js');
-wp_enqueue_script('sprintly-conn');
+
+add_action('wp_head',function(){
+    ?>
+<script type="text/javascript">
+    jQuery().ready(function(){
+        //You'll want to do something more secure than this, but you get the idea
+        sprintly_api.auth.email     = 'shilpivyas7@gmail.com';
+        sprintly_api.auth.api_key   = 'HdspRBAEetJzeMTW7SgUPaU8kRPqJNyB'; //SdfQPPhNQzMquZLWcMhQGThvNVS44JnY;
+        var new_item;
+
+        var products = sprintly_api.product.list();
+        var selected_product = 0; // Possibly derived from a select list of products
+        sprintly_api.product.selected = products[selected_product].id;
+
+        //get all items
+        var item_list = sprintly_api.item.list();
+    });
+
+</script>
+    <?php
+});
 
 add_action('wp_enqueue_scripts', function() {
     wp_enqueue_style('bootstrap');
@@ -19,7 +39,7 @@ add_action('wp_enqueue_scripts', function() {
 add_action('wp_head', function() {
             ?>
             <script type="text/javascript">
-                $.noConflict();
+                
                 jQuery(document).ready(function(){
                     jQuery('.sbmt-btn').click(function(){
                         error = false;

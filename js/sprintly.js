@@ -83,7 +83,7 @@ var sprintly_api = {
 		}
 
 		// Prepare AJAX Call Authentication
-		$.ajaxSetup({
+		jQuery.ajaxSetup({
 			beforeSend: function(xhr, settings)
 			{
 				xhr.setRequestHeader('Authorization', 'Basic ' + btoa(sprintly_api.auth.email + ':' + sprintly_api.auth.api_key));
@@ -104,7 +104,7 @@ var sprintly_api = {
 		}
 
 		// Make AJAX call
-		sprintly_api.ajax = $.ajax({
+		sprintly_api.ajax = jQuery.ajax({
 			url: sprintly_api.settings.base_url + query,
 			crossDomain: true,
 			async: false,
