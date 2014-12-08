@@ -18,6 +18,7 @@ add_action('wp',function(){
     wp_register_script('sprintly-js'    , get_template_directory_uri() .'/js/sprintly.js',array( 'jquery'));
     wp_register_script('sprintly-conn'  , get_template_directory_uri() .'/js/sprintly_conn.js',array( 'jquery'));
     wp_register_script('bootstrapjs'    , get_template_directory_uri() .'/js/bootstrap.js',array( 'jquery'));
+    wp_register_script('maphelper'      , get_template_directory_uri() .'/js/maphelper.js');
     
     
     /**

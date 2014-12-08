@@ -72,7 +72,7 @@ if ( !defined( 'ABSPATH' ) ) {
 		<?php responsive_in_header(); // header hook ?>
 
                 <div id="logo">
-                    <a href="<?php echo home_url( '/' ); ?>" title="">
+                    <a href="<?php echo esc_url(home_url('home')); ?>" title="">
                         <img src="<?php bloginfo('template_directory');?>/images/logo.gif" alt="">
                     </a>
                 </div><!-- end of #logo -->

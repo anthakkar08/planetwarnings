@@ -1,51 +1,51 @@
-<?php
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Planet Warnings</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Roboto+Condensed:300italic,700,400" />
+        <link rel="stylesheet" type="text/css" href="<?php bloginfo('template_directory'); ?>/css/firstpage.css" />
+        <script type="text/javascript">
+            jQuery().ready(function(){
+                var myBox1 = document.getElementById('frame-2');
+                myBox1.addEventListener('webkitAnimationEnd',function( event ) { 
+                myBox1.style.display = 'none'; }, false);
+            
+                var myBox2 = document.getElementById('frame-3');
+                myBox2.addEventListener('webkitAnimationEnd',function( event ) { 
+                myBox2.style.display = 'none'; }, false);
 
-// Exit if accessed directly
-if ( !defined( 'ABSPATH' ) ) {
-	exit;
-}
-
-/**
- * Site Front Page
- *
- * Note: You can overwrite front-page.php as well as any other Template in Child Theme.
- * Create the same file (name) include in /responsive-child-theme/ and you're all set to go!
- * @see            http://codex.wordpress.org/Child_Themes and
- *                 http://themeid.com/forum/topic/505/child-theme-example/
- *
- * @file           front-page.php
- * @package        Responsive
- * @author         Emil Uzelac
- * @copyright      2003 - 2014 CyberChimps
- * @license        license.txt
- * @version        Release: 1.0
- * @filesource     wp-content/themes/responsive/front-page.php
- * @link           http://codex.wordpress.org/Template_Hierarchy
- * @since          available since Release 1.0
- */
-
-/**
- * Globalize Theme Options
- */
-$responsive_options = responsive_get_options();
-/**
- * If front page is set to display the
- * blog posts index, include home.php;
- * otherwise, display static front page
- * content
- */
-if ( 'posts' == get_option( 'show_on_front' ) && $responsive_options['front_page'] != 1 ) {
-	get_template_part( 'home' );
-} elseif ( 'page' == get_option( 'show_on_front' ) && $responsive_options['front_page'] != 1 ) {
-	$template = get_post_meta( get_option( 'page_on_front' ), '_wp_page_template', true );
-	$template = ( $template == 'default' ) ? 'index.php' : $template;
-	locate_template( $template, true );
-} else {
-	get_header();
-
-	get_template_part( 'template-parts/featured-area' );
-
-	get_sidebar( 'home' );
-
-	get_footer();
-}
+            });
+        </script>
+    </head>
+    <body>
+        <div class="frontpage-anmiation">
+        <div class="container">
+    <div class="header">
+        <div class="clr"></div>
+    </div>
+    <div class="sp-container">
+        <div class="sp-content">
+            <div class="sp-globe"></div>
+            <h2 class="frame-1">As a part of World's First Global Virtual #HACKATHON<br> by Koding</h2>
+                <h2 class="frame-2">We tried to debug the Earth..</h2>
+                <div id="frame-2" class="frame-2">
+                    <img src="<?php bloginfo('template_directory'); ?>/images/koding.jpg" />
+                </div>
+            	
+                <div id="frame-3" class="frame-3">
+                    <img src="<?php bloginfo('template_directory'); ?>/images/elog.jpg" />
+                    <br/>
+                    <br/>
+                    <h2 class="frame-3">..and encountered various warnings from past!</h2>
+                </div                
+                <h2 class="frame-4">Now!</h2>
+                <h2 class="frame-5"><span>Take action to save the planet.</span> <br><span>Love life.</span> </h2>
+                <a class="sp-circle-link" href="<?php echo esc_url(home_url('map')); ?>">Join us!</a>
+        </div>
+    </div>
+</div>
+        </div>
+    </body>
+</html>
